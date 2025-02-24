@@ -1,5 +1,5 @@
-import BicycleTable from "./BicycleTable";
 import { Link } from "react-router-dom";
+import BicycleTable from "./BicycleTable";
 
 const AllProduct = () => {
   return (

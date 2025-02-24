@@ -1,4 +1,5 @@
-const ShopItem = ({ item }) => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const ShopItem = ({ item }: { item: any }) => {
   return (
     <div className="border p-4 bg-white shadow-md rounded-lg text-center">
       <img

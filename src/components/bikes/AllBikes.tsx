@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import useGetAllBike from "../../hook/useGetAllBike";
 import { FaRegCircle } from "react-icons/fa6";
 import BikeCard from "./BikeCard";
+import { useGlobalContext } from "../GlobalContext/GlobalProvider";
 
 const AllBicycles = () => {
   const { bikes, loading, error } = useGetAllBike();
   const [searchTerm, setSearchTerm] = useState("");
+  const { setProducts, products } = useGlobalContext();
   const [filters, setFilters] = useState({
     price: "",
     model: "",
@@ -14,15 +17,15 @@ const AllBicycles = () => {
     availability: "",
   });
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: any) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (e: any) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const filteredBikes = bikes?.data?.filter((bike) => {
+  const filteredBikes = bikes?.data?.filter((bike: any) => {
     return (
       (!filters.price || bike.price <= filters.price) &&
       (!filters.model ||
@@ -113,8 +116,13 @@ const AllBicycles = () => {
 
       {/* Bicycle Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredBikes?.map((bike: any) => (
-          <BikeCard key={bike?._id} bike={bike} />
+        {filteredBikes?.map((bike: any, index: number) => (
+          <BikeCard
+            key={index}
+            bike={bike}
+            setProducts={setProducts}
+            products={products}
+          />
         ))}
       </div>
     </div>

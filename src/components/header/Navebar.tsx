@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { MdLocationOn, MdPhone } from "react-icons/md";
 import { FaFacebookF, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import { IoMdGlobe } from "react-icons/io";
 import {
-  IoPersonOutline,
   IoHeartOutline,
   IoCartOutline,
   IoMenu,
@@ -11,12 +10,14 @@ import {
 } from "react-icons/io5";
 import DropdownUser from "./User";
 import { useGlobalContext } from "../GlobalContext/GlobalProvider";
+import Logo from "../shared/Logo";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [language, setLanguage] = useState("EN");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOpenUser, setIsOpenUser] = useState(false);
-  const { user } = useGlobalContext();
+
+  const { user, products } = useGlobalContext();
 
   return (
     <header className="w-full">
@@ -52,9 +53,7 @@ const Navbar = () => {
       {/* Main Navbar */}
       <nav className="bg-white shadow-md flex items-center justify-between px-6 md:px-16 lg:px-32 py-4 relative">
         {/* Logo */}
-        <div className="text-2xl font-bold flex items-center">
-          <span className="text-red-500">C</span>ycleCity
-        </div>
+        <Logo />
 
         <div className="flex items-center justify-center gap-2">
           {/* Search and Icons */}
@@ -73,12 +72,12 @@ const Navbar = () => {
                 0
               </span>
             </button>
-            <button className="relative text-gray-500">
+            <Link to={"/cards"} className="relative text-gray-500">
               <IoCartOutline size={24} />
               <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                0
+                {products.length}
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* Hamburger Menu */}
@@ -139,7 +138,7 @@ const Navbar = () => {
           <button className="relative text-gray-500">
             <IoCartOutline size={24} />
             <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-              0
+              {products.length}
             </span>
           </button>
         </div>

@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useGlobalContext } from "../GlobalContext/GlobalProvider";
 import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { user, loginUser } = useGlobalContext();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { loginUser } = useGlobalContext();
+  console.log({ location });
   const handleLogin = async () => {
-    console.log("Logging in with", { email, password });
     const response = await loginUser({ email, password });
     console.log({ response });
     if (response?.success) {
-      toast(response?.message || "Login successful");
+      toast.success(response?.message || "Login successful");
+      navigate(location.state.from);
     }
   };
 
@@ -20,7 +24,9 @@ const LoginPage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
-          <h1 className="text-2xl font-bold">🚴 CycleCity</h1>
+          <h1 className="text-2xl font-bold">
+            <Link to={"/"}>🚴 CycleCity</Link>
+          </h1>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">

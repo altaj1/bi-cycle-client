@@ -1,8 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import PhotoUpload from "../../../components/shared/PhotoUpload";
 
 // Define the TbiCycle type
 export type TbiCycle = {
@@ -43,7 +45,7 @@ const EditProduct: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const [images, setSetImages] = useState<string>("");
   // Fetch product details for editing
   useEffect(() => {
     const fetchProduct = async () => {
@@ -52,7 +54,8 @@ const EditProduct: React.FC = () => {
         const { data } = await axios.get(
           `${import.meta.env.VITE_API_URL}/products/${id}`
         );
-        setFormData(data);
+
+        setFormData(data?.data);
       } catch (err: any) {
         setError(err.response?.data?.message || "Failed to fetch product.");
       } finally {
@@ -97,12 +100,12 @@ const EditProduct: React.FC = () => {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/products/${id}`,
-        formData
+        { ...formData, images }
       );
 
       if (response?.data?.success) {
         toast.success("Product updated successfully!");
-        navigate("/products"); // Redirect to product list
+        navigate("/dashboard/Project"); // Redirect to product list
       }
     } catch (err: any) {
       setError(
@@ -237,7 +240,7 @@ const EditProduct: React.FC = () => {
               className="w-full p-2 border rounded"
             ></textarea>
           </div>
-
+          <PhotoUpload image={images} setImage={setSetImages} />
           <div>
             <button
               type="submit"

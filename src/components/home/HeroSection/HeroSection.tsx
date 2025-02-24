@@ -1,4 +1,4 @@
-import React from "react";
+import imga1 from "../../../assets/img1.jpeg";
 
 const HeroSection = () => {
   return (
@@ -6,7 +6,7 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
         <div className="lg:w-1/2 relative">
           <img
-            src="/electric-bike-rider.jpg"
+            src={imga1}
             alt="Electric Bike Rider"
             className="w-full h-auto rounded-lg shadow-md"
           />

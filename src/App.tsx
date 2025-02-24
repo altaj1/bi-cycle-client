@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
@@ -10,9 +10,13 @@ import HomeLayout from "./components/home/HomeLayout";
 import Panel from "./dashboard/layout/Panel";
 import AuthProvider from "./components/auth/AuthProvider";
 import AllBicycles from "./components/bikes/AllBikes";
-import AllProduct from "./dashboard/components/AllProduct";
-import AddProduct from "./dashboard/components/AddProduct";
-import EditProduct from "./dashboard/components/EditProduct";
+
+import AdminProvider from "./components/auth/AdminProvider";
+import AllUssers from "./dashboard/components/admin/users/AllUssers";
+import AllProduct from "./dashboard/components/admin/AllProduct";
+import AddProduct from "./dashboard/components/admin/AddProduct";
+import EditProduct from "./dashboard/components/admin/EditProduct";
+import Cards from "./components/bikes/Cards";
 // https://preview.themeforest.net/item/cyclecity-bicycle-store-html-template/full_screen_preview/55536284?_ga=2.23808250.1529216479.1739637541-1460017237.1739637541
 function App() {
   return (
@@ -33,6 +37,7 @@ function App() {
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
           <Route path="all-bicycle" element={<AllBicycles />} />
+          <Route path="cards" element={<Cards />} />
         </Route>
         {/* Auth Pages */}
         <Route path="auth">
@@ -49,9 +54,33 @@ function App() {
           }
         >
           <Route path="project" element={<FragmentLayout />}>
-            <Route index element={<AllProduct />} />
-            <Route path="add-product" element={<AddProduct />} />
-            <Route path="edit-product/:id" element={<EditProduct />} />
+            <Route
+              index
+              element={
+                <AdminProvider>
+                  <AllProduct />
+                </AdminProvider>
+              }
+            />
+            <Route
+              path="add-product"
+              element={
+                <AdminProvider>
+                  <AddProduct />
+                </AdminProvider>
+              }
+            />
+            <Route
+              path="edit-product/:id"
+              element={
+                <AdminProvider>
+                  <EditProduct />
+                </AdminProvider>
+              }
+            />
+          </Route>
+          <Route path="user" element={<FragmentLayout />}>
+            <Route index element={<AllUssers />} />
           </Route>
         </Route>
       </Routes>

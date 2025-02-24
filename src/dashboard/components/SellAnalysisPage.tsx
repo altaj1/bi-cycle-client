@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const salesData = [
   { month: "Jan", sales: 4000, profit: 2400 },

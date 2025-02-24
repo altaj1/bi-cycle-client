@@ -1,13 +1,19 @@
 import ShopItem from "./ShopItem";
+import imga10 from "../../../assets/img10.jpeg";
+import imga9 from "../../../assets/img9.jpeg";
+import imga7 from "../../../assets/img7.jpeg";
+import imga5 from "../../../assets/img5.jpeg";
+import imga8 from "../../../assets/img8.jpeg";
+import imga3 from "../../../assets/img3.jpeg";
 
 const ShopTheLook = () => {
   const shopItems = [
-    { name: "Bikes", image: "/bike.png" },
-    { name: "Accessories", image: "/helmet.png" },
-    { name: "Parts", image: "/glasses.png" },
-    { name: "Gear", image: "/bike-seat.png" },
-    { name: "Electronics", image: "/water-bottle.png" },
-    { name: "Equipment", image: "/gloves.png" },
+    { name: "Bikes", image: imga10 },
+    { name: "Accessories", image: imga7 },
+    { name: "Parts", image: imga9 },
+    { name: "Gear", image: imga5 },
+    { name: "Electronics", image: imga8 },
+    { name: "Equipment", image: imga3 },
   ];
   return (
     <section className="bg-gray-100 py-10 px-6">

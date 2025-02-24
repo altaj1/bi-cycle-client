@@ -6,6 +6,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import React, {
   createContext,
   ReactNode,
+  use,
   useContext,
   useEffect,
   useState,
@@ -17,6 +18,7 @@ interface UserPayload extends JwtPayload {
   email: string;
   role: string;
   _id: string;
+  name: string;
 }
 // Define the type for the context
 interface GlobalContextType {
@@ -38,7 +40,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<UserPayload | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [products, setProducts] = useState([]);
   const registerUser = async (data: {
     email: string;
     password: string;
@@ -83,6 +85,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
           email: decodedUser?.email,
           role: decodedUser?.role,
           _id: decodedUser?._id,
+          name: decodedUser?.name,
         });
       }
       setLoading(false);
@@ -115,6 +118,8 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
     loginUser,
     loading,
     logOutUser,
+    setProducts,
+    products,
   };
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -125,6 +130,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
           email: decodedUser?.email,
           role: decodedUser?.role,
           _id: decodedUser?._id,
+          name: decodedUser?.name,
         });
       } catch (error) {
         console.error("JWT Decode Error:", error);
@@ -132,7 +138,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
     }
     setLoading(false);
   }, []);
-
+  console.log({ user });
   return (
     <GlobalContext.Provider value={data}>{children}</GlobalContext.Provider>
   );

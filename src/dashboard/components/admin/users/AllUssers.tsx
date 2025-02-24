@@ -1,27 +1,65 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import useGetAllBike from "../../hook/useGetAllBike";
 import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const BicycleTable: React.FC = () => {
-  const { bikes, refetch } = useGetAllBike();
+const AllUssers = () => {
+  const [users, setUsers] = useState<any>(null);
+  const [_loading, setLoading] = useState(true);
+  const [_error, setError] = useState(null);
   const navigate = useNavigate();
-  const handleDelete = async (id: string) => {
+
+  // Fetch Users function with useCallback to prevent unnecessary re-renders
+  const fetchUsers = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/products/${id}`
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user`);
+      setUsers(data);
+    } catch (err) {
+      setError(err as any);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Handle block/unblock user
+  const handleToggleBlockUser = async (id: string) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/user/block/${id}`
       );
       console.log({ response });
-      if (response?.data?.status) {
+      if (response?.data?.success) {
         toast.success(response?.data?.message);
       }
-      refetch();
+      fetchUsers();
     } catch (error) {
-      console.log(error);
+      console.error("Error toggling block status:", error);
     }
   };
+  // Handle delete user
+  const handleDeleteUser = async (id: string) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/user/${id}`
+      );
+      console.log({ response });
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+      fetchUsers();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+  // Fetch Users on component mount
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+  console.log(users);
   return (
     <div className="font-[sans-serif] overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -31,26 +69,15 @@ const BicycleTable: React.FC = () => {
               Name
             </th>
             <th className="p-4 text-left text-sm font-medium text-white">
-              Brand
+              Email
             </th>
             <th className="p-4 text-left text-sm font-medium text-white">
-              Price
+              role
             </th>
             <th className="p-4 text-left text-sm font-medium text-white">
-              Type
+              Block
             </th>
-            <th className="p-4 text-left text-sm font-medium text-white">
-              Quantity
-            </th>
-            <th className="p-4 text-left text-sm font-medium text-white">
-              In Stock
-            </th>
-            <th className="p-4 text-left text-sm font-medium text-white">
-              Model
-            </th>
-            <th className="p-4 text-left text-sm font-medium text-white">
-              Category
-            </th>
+
             <th className="p-4 text-left text-sm font-medium text-white">
               Actions
             </th>
@@ -58,23 +85,31 @@ const BicycleTable: React.FC = () => {
         </thead>
 
         <tbody className="whitespace-nowrap">
-          {bikes?.data?.map((cycle: any, index: number) => (
+          {users?.data?.map((user: any, index: number) => (
             <tr key={index} className="even:bg-blue-50">
-              <td className="p-4 text-sm text-black">{cycle.name}</td>
-              <td className="p-4 text-sm text-black">{cycle.brand}</td>
-              <td className="p-4 text-sm text-black">${cycle.price}</td>
-              <td className="p-4 text-sm text-black">{cycle.type}</td>
-              <td className="p-4 text-sm text-black">{cycle.quantity}</td>
+              <td className="p-4 text-sm text-black">{user.name}</td>
+              <td className="p-4 text-sm text-black">{user.email}</td>
+              <td className="p-4 text-sm text-black">${user.role}</td>
               <td className="p-4 text-sm text-black">
-                {cycle.inStock ? "Yes" : "No"}
+                <button
+                  onClick={() => handleToggleBlockUser(user._id)}
+                  className={`w-8 h-4 flex items-center rounded-full p-1 transition-all duration-300 ${
+                    user?.isBlocked ? "bg-green-500" : "bg-gray-400"
+                  }`}
+                >
+                  <div
+                    className={`w-3 h-3 bg-white rounded-full shadow-md transform transition-all duration-300 ${
+                      user?.isBlocked ? "translate-x-3" : "translate-x-0"
+                    }`}
+                  />
+                </button>
               </td>
-              <td className="p-4 text-sm text-black">{cycle.model}</td>
-              <td className="p-4 text-sm text-black">{cycle.category}</td>
+
               <td className="p-4">
                 <button
                   className="mr-4"
                   title="Edit"
-                  onClick={() => navigate(`edit-product/${cycle._id}`)}
+                  onClick={() => navigate(`edit-user/${user._id}`)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +122,7 @@ const BicycleTable: React.FC = () => {
                 <button
                   className="mr-4"
                   title="Delete"
-                  onClick={() => handleDelete(cycle?._id)}
+                  onClick={() => handleDeleteUser(user?._id)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,4 +142,4 @@ const BicycleTable: React.FC = () => {
   );
 };
 
-export default BicycleTable;
+export default AllUssers;

@@ -1,12 +1,12 @@
-import HeroSlider from "../header/HeroSlider";
 import NewArrivals from "../bikes/NewArrivals";
 import HeroSection from "./HeroSection/HeroSection";
 import ShopTheLook from "./HeroSection/ShopTheLook";
+import DemoCarousel from "../header/HeroSlider";
 
 const Home = () => {
   return (
     <div className="w-full">
-      <HeroSlider />
+      <DemoCarousel />
       <NewArrivals />
       <HeroSection />
       <ShopTheLook />

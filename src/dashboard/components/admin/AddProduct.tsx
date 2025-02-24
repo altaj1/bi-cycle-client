@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import PhotoUpload from "../../../components/shared/PhotoUpload";
 
 // Define the TbiCycle type
 export type TbiCycle = {
@@ -40,6 +41,7 @@ const AddProduct: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [images, setSetImages] = useState<string>("");
 
   // Handle input changes
   // const handleChange = (
@@ -89,11 +91,11 @@ const AddProduct: React.FC = () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
-
+    console.log({ ...formData, images });
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/products`,
-        formData
+        { ...formData, images }
       );
       if (response?.data?.success) {
         toast.success(response?.data?.message);
@@ -249,6 +251,7 @@ const AddProduct: React.FC = () => {
             {loading ? "Adding..." : "Add Cycle"}
           </button>
         </div>
+        <PhotoUpload image={images} setImage={setSetImages} />
       </form>
     </div>
   );

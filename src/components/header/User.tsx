@@ -3,7 +3,7 @@ import { useGlobalContext } from "../GlobalContext/GlobalProvider";
 
 const DropdownUser = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { logOutUser } = useGlobalContext();
+  const { logOutUser, user } = useGlobalContext();
   return (
     <div className="relative font-sans w-max mx-auto">
       <button
@@ -17,7 +17,7 @@ const DropdownUser = () => {
           className="w-7 h-7 mr-3 rounded-full shrink-0"
           alt="Profile"
         />
-        John Doe
+        {user?.name}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-3 fill-gray-400 inline ml-3"
