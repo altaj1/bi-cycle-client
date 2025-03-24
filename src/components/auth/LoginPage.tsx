@@ -16,7 +16,12 @@ const LoginPage = () => {
     console.log({ response });
     if (response?.success) {
       toast.success(response?.message || "Login successful");
-      navigate(location.state.from);
+      const redirectPath =
+        location?.state?.from && location.state.from !== "/auth/login"
+          ? location.state.from
+          : "/";
+
+      navigate(redirectPath);
     }
   };
 

@@ -135,12 +135,12 @@ const Navbar = () => {
               0
             </span>
           </button>
-          <button className="relative text-gray-500">
+          <Link to={"/cards"} className="relative text-gray-500">
             <IoCartOutline size={24} />
             <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
               {products.length}
             </span>
-          </button>
+          </Link>
         </div>
       </nav>
     </header>

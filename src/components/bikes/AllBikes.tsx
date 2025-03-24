@@ -27,15 +27,18 @@ const AllBicycles = () => {
 
   const filteredBikes = bikes?.data?.filter((bike: any) => {
     return (
-      (!filters.price || bike.price <= filters.price) &&
+      (!filters?.price || bike?.price <= filters?.price) &&
       (!filters.model ||
-        bike.model.toLowerCase().includes(filters.model.toLowerCase())) &&
+        bike?.model?.toLowerCase()?.includes(filters?.model?.toLowerCase())) &&
       (!filters.brand ||
-        bike.brand.toLowerCase().includes(filters.brand.toLowerCase())) &&
-      (!filters.category ||
-        bike.category.toLowerCase().includes(filters.category.toLowerCase())) &&
-      (!filters.availability ||
-        bike.availability.toLowerCase() === filters.availability.toLowerCase())
+        bike?.brand?.toLowerCase()?.includes(filters?.brand?.toLowerCase())) &&
+      (!filters?.category ||
+        bike?.category
+          ?.toLowerCase()
+          ?.includes(filters?.category?.toLowerCase())) &&
+      (!filters?.availability ||
+        bike?.availability?.toLowerCase() ===
+          filters?.availability?.toLowerCase())
     );
   });
 

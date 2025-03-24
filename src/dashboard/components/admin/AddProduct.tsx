@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import PhotoUpload from "../../../components/shared/PhotoUpload";
+import { ETcycletype } from "./EditProduct";
+import { useNavigate } from "react-router-dom";
 
 // Define the TbiCycle type
 export type TbiCycle = {
@@ -18,12 +20,6 @@ export type TbiCycle = {
 };
 
 // Enum for cycle type
-export enum ETcycletype {
-  Mountain = "Mountain",
-  Road = "Road",
-  Hybrid = "Hybrid",
-  Electric = "Electric",
-}
 
 const AddProduct: React.FC = () => {
   const [formData, setFormData] = useState<TbiCycle>({
@@ -42,25 +38,8 @@ const AddProduct: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [images, setSetImages] = useState<string>("");
+  const navigation = useNavigate();
 
-  // Handle input changes
-  // const handleChange = (
-  //   e: React.ChangeEvent<
-  //     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  //   >
-  // ) => {
-  //   const { name, value, type, checked } = e.target;
-  //   let newValue: any;
-
-  //   // Convert to number if the field is price or quantity
-  //   if (name === "price" || name === "quantity") {
-  //     newValue = value ? Number(value) : 0;
-  //   } else {
-  //     newValue = type === "checkbox" ? checked : value;
-  //   }
-
-  //   setFormData({ ...formData, [name]: newValue });
-  // };
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -99,6 +78,7 @@ const AddProduct: React.FC = () => {
       );
       if (response?.data?.success) {
         toast.success(response?.data?.message);
+        navigation("/dashboard/Project");
       }
       setFormData({
         name: "",
@@ -242,6 +222,7 @@ const AddProduct: React.FC = () => {
           ></textarea>
         </div>
 
+        <PhotoUpload image={images} setImage={setSetImages} />
         <div>
           <button
             type="submit"
@@ -251,7 +232,6 @@ const AddProduct: React.FC = () => {
             {loading ? "Adding..." : "Add Cycle"}
           </button>
         </div>
-        <PhotoUpload image={images} setImage={setSetImages} />
       </form>
     </div>
   );

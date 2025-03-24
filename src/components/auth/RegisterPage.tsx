@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useGlobalContext } from "../GlobalContext/GlobalProvider";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -9,10 +10,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { registerUser } = useGlobalContext();
+  const navigation = useNavigate();
   const handleRegister = async () => {
     const response = await registerUser({ name, email, password });
     if (response?.success) {
       toast(response?.message || "Registering successful");
+      navigation("/auth/login");
     }
   };
 

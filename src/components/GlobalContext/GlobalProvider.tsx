@@ -106,6 +106,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
       // Reset user state
       setUser(null);
       setLoading(false);
+      window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);
     }
