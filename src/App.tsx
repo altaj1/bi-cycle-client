@@ -17,6 +17,8 @@ import AllProduct from "./dashboard/components/admin/AllProduct";
 import AddProduct from "./dashboard/components/admin/AddProduct";
 import EditProduct from "./dashboard/components/admin/EditProduct";
 import Cards from "./components/bikes/Cards";
+import Orders from "./dashboard/components/user/Orders";
+import AllOrders from "./dashboard/components/admin/AllOrders";
 // https://preview.themeforest.net/item/cyclecity-bicycle-store-html-template/full_screen_preview/55536284?_ga=2.23808250.1529216479.1739637541-1460017237.1739637541
 function App() {
   return (
@@ -81,6 +83,12 @@ function App() {
           </Route>
           <Route path="user" element={<FragmentLayout />}>
             <Route index element={<AllUssers />} />
+          </Route>
+          <Route path="all-order" element={<FragmentLayout />}>
+            <Route index element={<AllOrders />} />
+          </Route>
+          <Route path="order" element={<FragmentLayout />}>
+            <Route index element={<Orders />} />
           </Route>
         </Route>
       </Routes>

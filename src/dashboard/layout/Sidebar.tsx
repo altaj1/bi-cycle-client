@@ -1,4 +1,4 @@
-import { adminMenu } from "./routes";
+import { adminMenu, userMenu } from "./routes";
 import { Link } from "react-router";
 import Logo from "../../components/shared/Logo";
 import { MdFilterListOff } from "react-icons/md";
@@ -35,13 +35,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
           ? adminMenu.map((item, index) => (
               <Link
                 className="text-lg font-semibold"
-                to={item?.label}
+                to={item?.path}
                 key={index}
               >
                 {item?.label}
               </Link>
             ))
-          : ""}
+          : userMenu.map((item, index) => (
+              <Link
+                className="text-lg font-semibold"
+                to={item?.path}
+                key={index}
+              >
+                {item?.label}
+              </Link>
+            ))}
       </div>
     </aside>
   );
