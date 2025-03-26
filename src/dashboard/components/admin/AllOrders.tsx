@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AllOrders = () => {
-  const [_loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(false);
   const [_error, setError] = useState(null);
   const [orders, setOrders] = useState<any[]>([]);
 
@@ -28,7 +28,9 @@ const AllOrders = () => {
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
-
+  if (_loading) {
+    return;
+  }
   return (
     <div className="font-[sans-serif] overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -54,18 +56,18 @@ const AllOrders = () => {
         <tbody className="whitespace-nowrap">
           {orders?.map((order: any, index: number) => (
             <tr key={index} className="even:bg-blue-50">
-              <td className="p-4 text-sm text-black">{order.email}</td>
-              <td className="p-4 text-sm text-black">{order.product}</td>
-              <td className="p-4 text-sm text-black">{order.quantity}</td>
-              <td className="p-4 text-sm text-black">${order.totalPrice}</td>
+              <td className="p-4 text-sm text-black">{order?.email}</td>
+              <td className="p-4 text-sm text-black">{order?.product}</td>
+              <td className="p-4 text-sm text-black">{order?.quantity}</td>
+              <td className="p-4 text-sm text-black">${order?.totalPrice}</td>
               <td className="p-4 text-sm text-black">
-                {new Date(order.createdAt).toLocaleString()}
+                {new Date(order?.createdAt).toLocaleString()}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {orders.length === 0 && !_loading && (
+      {orders?.length === 0 && !_loading && (
         <p className="text-center mt-4 text-gray-500">No orders found.</p>
       )}
     </div>

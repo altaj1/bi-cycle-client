@@ -56,12 +56,12 @@ const Orders = () => {
         <tbody className="whitespace-nowrap">
           {orders?.map((order: any, index: number) => (
             <tr key={index} className="even:bg-blue-50">
-              <td className="p-4 text-sm text-black">{order.email}</td>
-              <td className="p-4 text-sm text-black">{order.product}</td>
-              <td className="p-4 text-sm text-black">{order.quantity}</td>
-              <td className="p-4 text-sm text-black">${order.totalPrice}</td>
+              <td className="p-4 text-sm text-black">{order?.email}</td>
+              <td className="p-4 text-sm text-black">{order?.product}</td>
+              <td className="p-4 text-sm text-black">{order?.quantity}</td>
+              <td className="p-4 text-sm text-black">${order?.totalPrice}</td>
               <td className="p-4 text-sm text-black">
-                {new Date(order.createdAt).toLocaleString()}
+                {new Date(order?.createdAt).toLocaleString()}
               </td>
             </tr>
           ))}

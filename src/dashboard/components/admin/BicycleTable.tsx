@@ -61,21 +61,21 @@ const BicycleTable: React.FC = () => {
         <tbody className="whitespace-nowrap">
           {bikes?.data?.map((cycle: any, index: number) => (
             <tr key={index} className="even:bg-blue-50">
-              <td className="p-4 text-sm text-black">{cycle.name}</td>
-              <td className="p-4 text-sm text-black">{cycle.brand}</td>
-              <td className="p-4 text-sm text-black">${cycle.price}</td>
-              <td className="p-4 text-sm text-black">{cycle.type}</td>
-              <td className="p-4 text-sm text-black">{cycle.quantity}</td>
+              <td className="p-4 text-sm text-black">{cycle?.name}</td>
+              <td className="p-4 text-sm text-black">{cycle?.brand}</td>
+              <td className="p-4 text-sm text-black">${cycle?.price}</td>
+              <td className="p-4 text-sm text-black">{cycle?.type}</td>
+              <td className="p-4 text-sm text-black">{cycle?.quantity}</td>
               <td className="p-4 text-sm text-black">
                 {cycle.inStock ? "Yes" : "No"}
               </td>
-              <td className="p-4 text-sm text-black">{cycle.model}</td>
-              <td className="p-4 text-sm text-black">{cycle.category}</td>
+              <td className="p-4 text-sm text-black">{cycle?.model}</td>
+              <td className="p-4 text-sm text-black">{cycle?.category}</td>
               <td className="p-4 cursor-pointer">
                 <button
                   className="mr-4"
                   title="Edit"
-                  onClick={() => navigate(`edit-product/${cycle._id}`)}
+                  onClick={() => navigate(`edit-product/${cycle?._id}`)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
