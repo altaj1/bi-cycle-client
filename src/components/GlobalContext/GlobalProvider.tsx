@@ -10,7 +10,6 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import Cookies from "js-cookie";
 
 // Define a custom type for user state
 interface UserPayload extends JwtPayload {
@@ -78,6 +77,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
 
       if (result.data?.data?.token) {
         // Decode JWT token
+        localStorage.setItem("accessToken", result.data?.data?.token);
         const decodedUser: UserPayload = jwtDecode(result.data?.data?.token);
         // Update state with user info
         setUser({
@@ -95,6 +95,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   };
   const logOutUser = async () => {
     try {
+      await localStorage.removeItem("accessToken");
       await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/logout`,
         {},
@@ -122,7 +123,7 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
     products,
   };
   useEffect(() => {
-    const token = Cookies.get("accessToken");
+    const token = localStorage.getItem("accessToken");
     if (token) {
       try {
         const decodedUser: UserPayload = jwtDecode(token);

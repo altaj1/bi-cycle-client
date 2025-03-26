@@ -2,7 +2,6 @@
 import { ReactNode, useEffect } from "react";
 import { useGlobalContext } from "../GlobalContext/GlobalProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 interface AdminProviderProps {
@@ -14,8 +13,8 @@ const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
   const location = useLocation();
   // const [isLoading, setIsLoading] = useState(true);
   console.log({ user });
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
-    const accessToken = Cookies.get("accessToken");
     console.log({ accessToken });
     if (!accessToken) {
       navigate("/auth/login", {

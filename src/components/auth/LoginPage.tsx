@@ -13,7 +13,6 @@ const LoginPage = () => {
   console.log({ location });
   const handleLogin = async () => {
     const response = await loginUser({ email, password });
-    console.log({ response });
     if (response?.success) {
       toast.success(response?.message || "Login successful");
       const redirectPath =

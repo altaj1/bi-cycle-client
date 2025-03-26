@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 
@@ -9,9 +8,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
   // const [isLoading, setIsLoading] = useState(true);
-
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
-    const accessToken = Cookies.get("accessToken");
     console.log({ accessToken });
     if (!accessToken) {
       navigate("/auth/login", {
